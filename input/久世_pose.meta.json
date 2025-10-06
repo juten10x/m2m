@@ -1,0 +1,8 @@
+{
+  "source_video": "動画データ/久世.mp4",
+  "frames": 161,
+  "input_dim": 99,
+  "fps_source": 30.0,
+  "fps_target": null,
+  "normalized": "none"
+}
