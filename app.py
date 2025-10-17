@@ -15,6 +15,9 @@ from fastapi import FastAPI, UploadFile, File, HTTPException, Header, Response
 from pydantic import BaseModel
 import joblib
 
+# CORSMiddleware（Access-Control-Allow-Origin ヘッダーを設定する用）
+from fastapi.middleware.cors import CORSMiddleware
+
 # ========== 設定（ローカル既定・環境変数で上書き可） ==========
 MODEL_PATH = os.environ.get("MODEL_PATH", "models/lstm_0814_model.pt")
 SCALER_PATH = os.environ.get("SCALER_PATH", "models/scaler.joblib")
@@ -144,6 +147,20 @@ class ArrayResponse(BaseModel):
     latent_dim: int
     z: List[List[float]]
     starts: Optional[List[int]] = None
+
+
+# Access-Control-Allow-Origin ヘッダーを設定
+origins = [
+    "https://localhost:5173",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/health")
